@@ -1,5 +1,6 @@
 const express = require("express");
 const upload = require("express-fileupload");
+const fs = require("fs");
 
 const app = express();
 
@@ -11,7 +12,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-    
+
+    const id=2356
+
     if (req.files) {
         // console.log(req.files);
         const file = req.files.file;
@@ -27,7 +30,6 @@ app.post("/", async (req, res) => {
 
             return res.status(400).json({message: "Please upload jpeg only"});
         }
-        
 
         const fileName = await file.name;
 
@@ -37,6 +39,9 @@ app.post("/", async (req, res) => {
                 res.send(err);
             }
             else {
+
+                fs.renameSync("./uploads/" + fileName, "./uploads/" + id + "img_1.blob");
+
                 res.send("file uploaded");
             }
 
@@ -47,7 +52,7 @@ app.post("/", async (req, res) => {
 });
 
 
-app.listen(5000, () => {
+app.listen(3000, () => {
 
     console.log("server is connected succesfully");
 });
